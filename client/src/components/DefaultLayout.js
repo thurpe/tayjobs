@@ -1,5 +1,5 @@
-import { Layout, Menu } from 'antd';
-import React from 'react';
+import { Layout, Menu } from "antd";
+import React from "react";
 
 import {
   MenuUnfoldOutlined,
@@ -12,19 +12,18 @@ import {
   PlusOutlined,
   CheckOutlined,
   LogoutOutlined,
-} from '@ant-design/icons';
-import { Link } from 'react-router-dom';
-import Filter from './Filter';
+} from "@ant-design/icons";
+import { Link } from "react-router-dom";
+import Filter from "./Filter";
 
 const { Header, Sider, Content } = Layout;
 
 class DefaultLayout extends React.Component {
-  
-  constructor(props){
-      super(props);
-      this.state = {
-        collapsed: false,
-      };
+  constructor(props) {
+    super(props);
+    this.state = {
+      collapsed: false,
+    };
   }
 
   toggle = () => {
@@ -33,74 +32,96 @@ class DefaultLayout extends React.Component {
     });
   };
 
-  logout=()=>{
-      localStorage.removeItem('user')
-      window.location.reload()
-  }
+  logout = () => {
+    localStorage.removeItem("user");
+    window.location.reload();
+  };
 
   render() {
-    const user = JSON.parse(localStorage.getItem('user'))
+    const user = JSON.parse(localStorage.getItem("user"));
     return (
       <Layout>
-        <Sider trigger={null} collapsible collapsed={this.state.collapsed}
-         style={{position: 'sticky' , overflow : 'auto' , height:'100%' , top:0}}
+        <Sider
+          trigger={null}
+          collapsible
+          collapsed={this.state.collapsed}
+          style={{
+            position: "sticky",
+            overflow: "auto",
+            height: "100%",
+            top: 0,
+          }}
         >
           <div className="logo">
-              {this.state.collapsed ? (<h1>SJ</h1>) : (<h1>SheyJobs</h1>)}
+            {this.state.collapsed ? <h1>TJ</h1> : <h1>TayJobs</h1>}
           </div>
-          <Menu theme="dark" mode="inline" defaultSelectedKeys={[window.location.pathname]}>
+          <Menu
+            theme="dark"
+            mode="inline"
+            defaultSelectedKeys={[window.location.pathname]}
+          >
             <Menu.Item key="/" icon={<HomeOutlined />}>
-              <Link to='/'>Home</Link>
+              <Link to="/">Home</Link>
             </Menu.Item>
             <Menu.Item key="/profile" icon={<UserOutlined />}>
-            <Link to='/profile'>Profile</Link>
+              <Link to="/profile">Profile</Link>
             </Menu.Item>
             <Menu.Item key="/appliedjobs" icon={<PlusSquareOutlined />}>
-            <Link to='/appliedjobs'>Applied Jobs</Link>
+              <Link to="/appliedjobs">Applied Jobs</Link>
             </Menu.Item>
 
             <Menu.Item key="/postjob" icon={<PlusOutlined />}>
-            <Link to='/postjob'>Post Job</Link>
+              <Link to="/postjob">Post Job</Link>
             </Menu.Item>
 
             <Menu.Item key="/posted" icon={<CheckOutlined />}>
-            <Link to='/posted'>Posted</Link>
+              <Link to="/posted">Posted</Link>
             </Menu.Item>
 
             <Menu.Item key="/logout" icon={<LogoutOutlined />}>
-            <Link onClick={this.logout}>Logout</Link>
+              <Link onClick={this.logout}>Logout</Link>
             </Menu.Item>
           </Menu>
         </Sider>
         <Layout className="site-layout">
-          <Header className="site-layout-background" style={{ padding: 0 , position: 'sticky' , overflow : 'auto' , top:0 , zIndex:9999}}>
-           
-           <div className="flex justify-content-between">
+          <Header
+            className="site-layout-background"
+            style={{
+              padding: 0,
+              position: "sticky",
+              overflow: "auto",
+              top: 0,
+              zIndex: 9999,
+            }}
+          >
+            <div className="flex justify-content-between">
+              <div>
+                {React.createElement(
+                  this.state.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
+                  {
+                    className: "trigger",
+                    onClick: this.toggle,
+                  }
+                )}
+              </div>
 
-             <div>
-             {React.createElement(this.state.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-              className: 'trigger',
-              onClick: this.toggle,
-            })}
-             </div>
+              <div>
+                <Filter />
+              </div>
 
-             <div>
-                <Filter/>
-             </div>
-
-             <div style={{display : this.state.collapsed ? 'none' : 'inline'}}>
-                  <h5 className="mr-2"><b>{user.username}</b></h5>
-             </div>
-
-           </div>
-           
-
-
+              <div
+                style={{ display: this.state.collapsed ? "none" : "inline" }}
+              >
+                <h5 className="mr-2">
+                  <b>{user.username}</b>
+                </h5>
+              </div>
+            </div>
           </Header>
           <Content
             className="site-layout-background"
             style={{
-              margin: '24px 16px',
+              margin: "24px 16px",
               padding: 24,
               minHeight: 280,
             }}
@@ -113,4 +134,4 @@ class DefaultLayout extends React.Component {
   }
 }
 
-export default DefaultLayout
+export default DefaultLayout;
